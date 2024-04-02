@@ -10,9 +10,7 @@ const Nav = () => {
         <img className={NavStyle.logo} src={logo} alt="logo" />
         <h1 className={NavStyle.name}>Valoo</h1>
       </div>
-      <ul className={NavStyle.links}>
-        <li><a href="#"><img className={NavStyle.cart} src={cart} alt="cart" /></a></li>
-      </ul>
+      <a href="#"><img className={NavStyle.cart} src={cart} alt="cart" /></a>
     </nav>
   )
 }
