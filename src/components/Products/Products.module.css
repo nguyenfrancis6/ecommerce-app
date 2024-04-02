@@ -1,8 +1,58 @@
+.container {
+  display: flex;
+  max-width: 1500px;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+  margin: 50px;
+  align-items: center;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 30px;
+}
+
 .leftArrow {
   transform: scaleX(-1);
 }
 
-img {
+.leftButton {
+  position: absolute; 
+  left: 20px;
+  padding-right: 5px;
+}
+
+.rightButton {
+  position: absolute;
+  right: 20px;
+  padding-left: 5px;
+}
+
+.button {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.arrow {
   width: 30px;
   height: 30px;
+  opacity: 1;
+}
+
+.button:hover {
+  border: 1px solid rgba(0, 0, 0, 0.7);
 }

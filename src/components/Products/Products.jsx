@@ -4,6 +4,7 @@ import axios from "axios";
 import "./Products.module.css";
 import arrow from "../../assets/arrow.png";
 import ProductStyle from "./Products.module.css";
+import ItemCard from "../ItemCard/ItemCard";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,9 @@ const Products = () => {
           `https://dummyjson.com/products?limit=20&skip=${skipNumber}`
         );
         setProducts(response.data.products);
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -51,15 +54,38 @@ const Products = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <button onClick={prevProducts}>
-            <img className={ProductStyle.leftArrow} src={arrow} alt="" />
-          </button>
-          <button onClick={nextProducts}>
-            <img src={arrow} alt="" />
-          </button>
-          {products.map((item, index) => (
-            <div key={index}>{item.title}</div>
-          ))}
+          <div className={ProductStyle.container}>
+            <h1>Browse And Shop!</h1>
+            <div className={ProductStyle.buttonContainer}>
+              {skipNumber !== 0 && (
+                <button
+                  className={`${ProductStyle.leftButton} ${ProductStyle.button}`}
+                  onClick={prevProducts}
+                >
+                  <img
+                    className={`${ProductStyle.leftArrow} ${ProductStyle.arrow}`}
+                    src={arrow}
+                    alt="arrow"
+                  />
+                </button>
+              )}
+              {skipNumber !== 80 && (
+                <button
+                  className={`${ProductStyle.rightButton} ${ProductStyle.button}`}
+                  onClick={nextProducts}
+                >
+                  <img
+                    className={`${ProductStyle.rightArrow} ${ProductStyle.arrow}`}
+                    src={arrow}
+                    alt="arrow"
+                  />
+                </button>
+              )}
+            </div>
+            <div className={ProductStyle.cardContainer}>
+              <ItemCard products={products} />
+            </div>
+          </div>
         </>
       )}
     </>
