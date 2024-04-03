@@ -5,11 +5,13 @@ import "./Products.module.css";
 import arrow from "../../assets/arrow.png";
 import ProductStyle from "./Products.module.css";
 import ItemCard from "../ItemCard/ItemCard";
+import searchIcon from "../../assets/search_icon.png";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [skipNumber, setSkipNumber] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // get previous product data
   function prevProducts() {
@@ -24,6 +26,21 @@ const Products = () => {
       setSkipNumber((prevNumber) => prevNumber + 20);
     }
   }
+
+  const searchProduct = async (product) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://dummyjson.com/products/search?q=${product}&limit=20`
+      );
+      setProducts(response.data.products);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -56,6 +73,25 @@ const Products = () => {
         <>
           <div className={ProductStyle.container}>
             <h1>Browse And Shop!</h1>
+            <div className={ProductStyle.searchContainer}>
+              <label className={ProductStyle.searchLabel} htmlFor="search">
+                Search a product
+              </label>
+              <div className={ProductStyle.search}>
+                <input
+                  className={ProductStyle.searchBar}
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <img
+                  className={ProductStyle.searchIcon}
+                  src={searchIcon}
+                  alt=""
+                  onClick={() => searchProduct(searchTerm)}
+                />
+              </div>
+            </div>
             <div className={ProductStyle.buttonContainer}>
               {skipNumber !== 0 && (
                 <button
