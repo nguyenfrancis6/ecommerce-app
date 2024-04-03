@@ -73,7 +73,6 @@ const Products = () => {
     };
 
     getProducts();
-    setSearchClicked(false);
   }, [skipNumber]);
 
   useEffect(() => {
@@ -136,7 +135,7 @@ const Products = () => {
               </div>
             )}
             <div className={ProductStyle.cardContainer}>
-              <ItemCard products={products} />
+              {products.length === 0 ? "No item found" : <ItemCard products={products} />}
             </div>
           </div>
         </>
