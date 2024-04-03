@@ -12,6 +12,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [skipNumber, setSkipNumber] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchClicked, setSearchClicked] = useState(false);
 
   // get previous product data
   function prevProducts() {
@@ -30,13 +31,26 @@ const Products = () => {
   const searchProduct = async (product) => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://dummyjson.com/products/search?q=${product}&limit=20`
-      );
-      setProducts(response.data.products);
-      setTimeout(() => {
-        setLoading(false);
-      }, 500);
+      if (product === "") {
+        const response = await axios.get(
+          "https://dummyjson.com/products?limit=20&skip=0"
+        );
+        setProducts(response.data.products);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setSearchClicked(false);
+        setSkipNumber(0);
+      } else {
+        const response = await axios.get(
+          `https://dummyjson.com/products/search?q=${product}&limit=20`
+        );
+        setProducts(response.data.products);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        setSearchClicked(true);
+      }
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -59,6 +73,7 @@ const Products = () => {
     };
 
     getProducts();
+    setSearchClicked(false);
   }, [skipNumber]);
 
   useEffect(() => {
@@ -88,36 +103,38 @@ const Products = () => {
                   className={ProductStyle.searchIcon}
                   src={searchIcon}
                   alt=""
-                  onClick={() => searchProduct(searchTerm)}
+                  onClick={() => searchProduct(searchTerm.trim()) && setSearchTerm(searchTerm.trim())}
                 />
               </div>
             </div>
-            <div className={ProductStyle.buttonContainer}>
-              {skipNumber !== 0 && (
-                <button
-                  className={`${ProductStyle.leftButton} ${ProductStyle.button}`}
-                  onClick={prevProducts}
-                >
-                  <img
-                    className={`${ProductStyle.leftArrow} ${ProductStyle.arrow}`}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-              )}
-              {skipNumber !== 80 && (
-                <button
-                  className={`${ProductStyle.rightButton} ${ProductStyle.button}`}
-                  onClick={nextProducts}
-                >
-                  <img
-                    className={`${ProductStyle.rightArrow} ${ProductStyle.arrow}`}
-                    src={arrow}
-                    alt="arrow"
-                  />
-                </button>
-              )}
-            </div>
+            {!searchClicked && (
+              <div className={ProductStyle.buttonContainer}>
+                {skipNumber !== 0 && (
+                  <button
+                    className={`${ProductStyle.leftButton} ${ProductStyle.button}`}
+                    onClick={prevProducts}
+                  >
+                    <img
+                      className={`${ProductStyle.leftArrow} ${ProductStyle.arrow}`}
+                      src={arrow}
+                      alt="arrow"
+                    />
+                  </button>
+                )}
+                {skipNumber !== 80 && (
+                  <button
+                    className={`${ProductStyle.rightButton} ${ProductStyle.button}`}
+                    onClick={nextProducts}
+                  >
+                    <img
+                      className={`${ProductStyle.rightArrow} ${ProductStyle.arrow}`}
+                      src={arrow}
+                      alt="arrow"
+                    />
+                  </button>
+                )}
+              </div>
+            )}
             <div className={ProductStyle.cardContainer}>
               <ItemCard products={products} />
             </div>
