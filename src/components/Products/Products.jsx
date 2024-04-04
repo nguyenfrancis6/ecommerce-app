@@ -28,9 +28,11 @@ const Products = () => {
     }
   }
 
+  // search product function
   const searchProduct = async (product) => {
     try {
       setLoading(true);
+      // go back to initial products if no input
       if (product === "") {
         const response = await axios.get(
           "https://dummyjson.com/products?limit=20&skip=0"
@@ -41,7 +43,9 @@ const Products = () => {
         }, 500);
         setSearchClicked(false);
         setSkipNumber(0);
-      } else {
+      }
+      // use search term
+      else {
         const response = await axios.get(
           `https://dummyjson.com/products/search?q=${product}&limit=20`
         );
@@ -56,6 +60,7 @@ const Products = () => {
     }
   };
 
+  // initial products
   useEffect(() => {
     const getProducts = async () => {
       try {
@@ -82,7 +87,7 @@ const Products = () => {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <div style={{height: '70vh'}}>Loading...</div>
       ) : (
         <>
           <div className={ProductStyle.container}>
@@ -102,7 +107,10 @@ const Products = () => {
                   className={ProductStyle.searchIcon}
                   src={searchIcon}
                   alt=""
-                  onClick={() => searchProduct(searchTerm.trim()) && setSearchTerm(searchTerm.trim())}
+                  onClick={() =>
+                    searchProduct(searchTerm.trim()) &&
+                    setSearchTerm(searchTerm.trim())
+                  }
                 />
               </div>
             </div>
@@ -135,7 +143,11 @@ const Products = () => {
               </div>
             )}
             <div className={ProductStyle.cardContainer}>
-              {products.length === 0 ? "No item found" : <ItemCard products={products} />}
+              {products.length === 0 ? (
+                "No item found"
+              ) : (
+                <ItemCard products={products} />
+              )}
             </div>
           </div>
         </>
