@@ -4,11 +4,19 @@ import { useEffect } from "react";
 import { CartContext } from "../../context/CartContext";
 
 const ItemCard = ({ products }) => {
-  const { cart, addProduct, removeProduct } = useContext(CartContext);
+  const { cart, addProduct, removeProduct, totalQuantity, totalValue } = useContext(CartContext);
 
   useEffect(() => {
     console.log(cart)
   }, [cart])
+
+  useEffect(() => {
+    console.log(totalQuantity)
+  }, [totalQuantity])
+
+  useEffect(() => {
+    console.log(totalValue)
+  }, [totalValue])
 
   return (
     <>
@@ -22,13 +30,13 @@ const ItemCard = ({ products }) => {
             <div className={CardStyle.buttons}>
               <button
                 className={CardStyle.editButton}
-                onClick={() => removeProduct(item.id)}
+                onClick={() => removeProduct(item.id, item.price)}
               >
                 -
               </button>
               <button
                 className={CardStyle.editButton}
-                onClick={() => addProduct(item.id)}
+                onClick={() => addProduct(item.id, item.price)}
               >
                 +
               </button>
