@@ -68,7 +68,77 @@ const ItemCard = ({ products }) => {
     }
   };
 
-  const removeProduct = async (productId) => {};
+  const removeProduct = async (productId) => {
+    try {
+      if (!cartData) {
+        console.error('Cart data is not available.');
+        return;
+      }
+  
+      // Find the index of the product to be removed
+      const productIndex = cartData.products.findIndex(
+        (product) => product.id === productId
+      );
+  
+      if (productIndex === -1) {
+        console.error('Product not found in cart.');
+        return;
+      }
+  
+      const existingProduct = cartData.products[productIndex];
+  
+      let updatedProducts;
+  
+      // If quantity is greater than 1, decrement the quantity
+      if (existingProduct.quantity > 1) {
+        updatedProducts = [
+          ...cartData.products.slice(0, productIndex),
+          { ...existingProduct, quantity: existingProduct.quantity - 1 },
+          ...cartData.products.slice(productIndex + 1),
+        ];
+      } else {
+        // If quantity is 1, remove the product from the cart
+        updatedProducts = [
+          ...cartData.products.slice(0, productIndex),
+          ...cartData.products.slice(productIndex + 1),
+        ];
+  
+        // Update the cart with the updated products array
+        const response = await axios.put(
+          `https://dummyjson.com/carts/1`,
+          {
+            merge: true,
+            products: updatedProducts,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+  
+        // Update the cart data state with the response data
+        setCartData(response.data);
+        
+        return; // Exit early after removing the product
+      }
+  
+      // Update the cart with the updated products array
+      const response = await axios.put(
+        `https://dummyjson.com/carts/1`,
+        {
+          merge: true,
+          products: updatedProducts,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+  
+      // Update the cart data state with the response data
+      setCartData(response.data);
+    } catch (error) {
+      console.error("Error removing product: ", error);
+    }
+  };
 
   return (
     <>
