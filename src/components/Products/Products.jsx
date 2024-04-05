@@ -6,6 +6,7 @@ import arrow from "../../assets/arrow.png";
 import ProductStyle from "./Products.module.css";
 import ItemCard from "../ItemCard/ItemCard";
 import searchIcon from "../../assets/search_icon.png";
+import Categories from "../Categories/Categories";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -87,11 +88,12 @@ const Products = () => {
   return (
     <>
       {loading ? (
-        <div style={{height: '70vh'}}>Loading...</div>
+        <div style={{height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>Loading...</div>
       ) : (
         <>
           <div className={ProductStyle.container}>
-            <h1>Browse And Shop!</h1>
+            <h1 style={{marginBottom: '30px'}}>Browse And Shop!</h1>
+            <Categories setProducts={setProducts} setLoading={setLoading} setSearchClicked={setSearchClicked} />
             <div className={ProductStyle.searchContainer}>
               <label className={ProductStyle.searchLabel} htmlFor="search">
                 Search a product

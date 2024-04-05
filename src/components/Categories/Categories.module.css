@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  text-align: start;
+  max-width: 1000px;
+  margin-left: 43px;
+  margin: 0 auto;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.categoryList {
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.categoryName {
+  margin: 5px 10px 5px 0;
+}
+
+.categoryName:hover {
+  text-decoration: underline; 
+  cursor: pointer;
+}
