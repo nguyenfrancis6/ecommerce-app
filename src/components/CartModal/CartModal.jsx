@@ -37,7 +37,7 @@ const CartModal = ({ setModalOpen }) => {
           </div>
         ))}
       </div>
-      <div>Total: ${totalValue}</div>
+      <div>Total: ${totalValue.toFixed(2)}</div>
     </div>
   );
 };
