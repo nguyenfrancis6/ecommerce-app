@@ -19,14 +19,14 @@ export const CartProvider = ({ children }) => {
     setTotalValue(value)
   }, [cart])
 
-  const addProduct = (productId, price) => {
+  const addProduct = (productId, price, title, image) => {
     const existingProductIndex = cart.findIndex(item => item.id === productId);
     if (existingProductIndex !== -1) {
       const updatedCart = [...cart];
       updatedCart[existingProductIndex].quantity += 1;
       setCart(updatedCart);
     } else {
-      setCart([...cart, { id: productId, quantity: 1, price: price }]);
+      setCart([...cart, { id: productId, quantity: 1, price: price, title: title, image: image }]);
     }
   };
 

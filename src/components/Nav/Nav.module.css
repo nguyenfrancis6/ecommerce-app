@@ -21,8 +21,28 @@
   font-size:36px; 
 }
 
+.cartContainer {
+  position: relative;
+}
+
 .cart {
   height: 35px;
   width: 35px;
   margin: 20px 10px 10px 10px;
+  cursor: pointer;
+}
+
+.quantityContainer {
+  position: absolute;
+  top: 10px;
+  right: -5px;
+  border: none;
+  border-radius: 20px;
+  width: 30px;
+  height: 20px;
+  text-align: center;
+  padding-bottom: 20px;
+  z-index: 10;
+  background-color: red;
+  color: white;
 }

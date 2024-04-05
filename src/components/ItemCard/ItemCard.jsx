@@ -30,13 +30,13 @@ const ItemCard = ({ products }) => {
             <div className={CardStyle.buttons}>
               <button
                 className={CardStyle.editButton}
-                onClick={() => removeProduct(item.id, item.price)}
+                onClick={() => removeProduct(item.id)}
               >
                 -
               </button>
               <button
                 className={CardStyle.editButton}
-                onClick={() => addProduct(item.id, item.price)}
+                onClick={() => addProduct(item.id, item.price, item.title, item.images[0])}
               >
                 +
               </button>
